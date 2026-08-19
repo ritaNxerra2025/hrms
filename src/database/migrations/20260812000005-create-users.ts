@@ -28,12 +28,8 @@ export default {
         onUpdate: 'CASCADE',
         onDelete: 'SET NULL',
       },
-      first_name: {
-        type: DataTypes.STRING(120),
-        allowNull: false,
-      },
-      last_name: {
-        type: DataTypes.STRING(120),
+      full_name: {
+        type: DataTypes.STRING(255),
         allowNull: false,
       },
       email: {

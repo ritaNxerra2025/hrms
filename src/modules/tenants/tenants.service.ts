@@ -1,5 +1,5 @@
 import {
-  ConflictException,
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -15,7 +15,7 @@ export class TenantsService {
   async create(dto: CreateTenantDto): Promise<Tenant> {
     const existing = await this.tenantsRepository.findByCode(dto.code);
     if (existing) {
-      throw new ConflictException(`Tenant code "${dto.code}" already exists`);
+      throw new BadRequestException(`Tenant code "${dto.code}" already exists`);
     }
 
     return this.tenantsRepository.create({

@@ -39,14 +39,14 @@ export class DepartmentsController {
   }
 
   @Get()
-  @RequirePermission('organization:department:read')
+  // @RequirePermission('organization:department:read')
   @ApiOperation({ summary: 'List departments of the current tenant' })
   findAll(@CurrentTenant() tenant: Tenant): Promise<Department[]> {
     return this.departmentsService.findAll(tenant.id);
   }
 
   @Get(':id')
-  @RequirePermission('organization:department:read')
+  // @RequirePermission('organization:department:read')
   @ApiOperation({ summary: 'Get a single department' })
   @ApiParam({ name: 'id', type: Number })
   findOne(

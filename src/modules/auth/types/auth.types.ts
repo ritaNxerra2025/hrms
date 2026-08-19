@@ -10,7 +10,7 @@ export interface ValidatedUser {
 
 export interface AuthProfile {
   user: User;
-  permissions: string[];
+  // permissions: string[];
 }
 
 export interface AuthTokens {

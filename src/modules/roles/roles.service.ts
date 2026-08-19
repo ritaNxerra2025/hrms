@@ -1,5 +1,5 @@
 import {
-  ConflictException,
+  BadRequestException,
   ForbiddenException,
   Injectable,
   NotFoundException,
@@ -65,7 +65,7 @@ export class RolesService {
         dto.name,
       );
       if (existing && existing.id !== role.id) {
-        throw new ConflictException(`Role name "${dto.name}" already exists`);
+        throw new BadRequestException(`Role name "${dto.name}" already exists`);
       }
       await this.rolesRepository.update(id, { name: dto.name, code: toRoleCode(dto.name) });
     } else {
@@ -107,10 +107,10 @@ export class RolesService {
     ]);
 
     if (byName) {
-      throw new ConflictException(`Role name "${name}" already exists`);
+      throw new BadRequestException(`Role name "${name}" already exists`);
     }
     if (byCode) {
-      throw new ConflictException(`Role code "${code}" already exists`);
+      throw new BadRequestException(`Role code "${code}" already exists`);
     }
   }
 }

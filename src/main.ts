@@ -41,7 +41,7 @@ async function bootstrap() {
       'Multi-tenant HRMS backend with Sequelize, MySQL, RBAC, Roles, Departments, and User management.',
     )
     .setVersion('1.0')
-    .addServer(`http://localhost:${port}/${apiPrefix}`, 'Development')
+    // .addServer(`http://localhost:${port}/${apiPrefix}`, 'Development')
     .addBearerAuth()
     .build();
 

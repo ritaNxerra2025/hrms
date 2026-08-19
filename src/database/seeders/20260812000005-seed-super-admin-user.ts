@@ -7,9 +7,7 @@ export default {
   async up(queryInterface: QueryInterface) {
     const email = process.env.SUPER_ADMIN_EMAIL ?? 'superadmin@nxerra.com';
     const password = process.env.SUPER_ADMIN_PASSWORD ?? 'Nxerra@2026';
-    // const firstName = process.env.SUPER_ADMIN_FIRST_NAME ?? 'Super';
     const fullName = process.env.SUPER_ADMIN_FULL_NAME ?? 'Super Admin';
-    // const lastName = process.env.SUPER_ADMIN_LAST_NAME ?? 'Admin';
 
     const tenantRows = await queryInterface.sequelize.query<{ id: number }>(
       'SELECT id FROM tenants WHERE code = ? LIMIT 1',
@@ -36,8 +34,6 @@ export default {
         {
           tenant_id: tenantId,
           department_id: departmentId,
-          // first_name: firstName,
-          // last_name: lastName,
           full_name: fullName,
           email,
           password_hash: passwordHash,

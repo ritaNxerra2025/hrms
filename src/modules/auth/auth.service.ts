@@ -1,5 +1,5 @@
 import {
-  ConflictException,
+  BadRequestException,
   Injectable,
   UnauthorizedException,
 } from '@nestjs/common';
@@ -52,7 +52,7 @@ export class AuthService {
       dto.adminEmail.toLowerCase().trim(),
     );
     if (existingUser) {
-      throw new ConflictException(`Email "${dto.adminEmail}" is already registered`);
+      throw new BadRequestException(`Email "${dto.adminEmail}" is already registered`);
     }
 
     const cleanCode = dto.companyCode.trim().toUpperCase();
@@ -60,7 +60,7 @@ export class AuthService {
       where: { code: cleanCode },
     });
     if (existingTenant) {
-      throw new ConflictException(`Company code "${cleanCode}" is already in use`);
+      throw new BadRequestException(`Company code "${cleanCode}" is already in use`);
     }
 
     return this.sequelize.transaction(async (transaction) => {
@@ -306,9 +306,10 @@ export class AuthService {
     if (!user) {
       throw new UnauthorizedException('User no longer exists');
     }
-    const permissions =
-      await this.userPermissionsService.getPermissionNames(userId);
-    return { user, permissions };
+    // const permissions =
+    //   await this.userPermissionsService.getPermissionNames(userId);
+    // return { user, permissions };
+    return {user};
   }
 
   private async issueTokens(

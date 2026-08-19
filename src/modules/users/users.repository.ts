@@ -8,7 +8,7 @@ import { Role } from '../../database/models/role.model';
 import { User } from '../../database/models/user.model';
 import { UserRole } from '../../database/models/user-role.model';
 
-const PUBLIC_ATTRIBUTES = { exclude: ['passwordHash'] };
+const PUBLIC_ATTRIBUTES = { exclude: ['passwordHash','deletedAt','updatedAt'] };
 
 @Injectable()
 export class UsersRepository {
@@ -64,7 +64,7 @@ export class UsersRepository {
         {
           model: Role,
           through: { attributes: [] },
-          include: [{ model: Permission, through: { attributes: [] } }],
+          // include: [{ model: Permission, through: { attributes: [] } }],
         },
       ],
     });

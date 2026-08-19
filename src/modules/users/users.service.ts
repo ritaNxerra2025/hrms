@@ -24,7 +24,7 @@ export class UsersService {
   async create(tenantId: number, dto: CreateUserDto): Promise<User> {
     const existing = await this.usersRepository.findByEmail(dto.email);
     if (existing) {
-      throw new ConflictException(`Email "${dto.email}" is already registered`);
+      throw new BadRequestException(`Email "${dto.email}" is already registered`);
     }
 
     if (dto.departmentId) {
@@ -75,7 +75,7 @@ export class UsersService {
     if (dto.email && dto.email.trim().toLowerCase() !== user.email) {
       const existing = await this.usersRepository.findByEmail(dto.email);
       if (existing && existing.id !== user.id) {
-        throw new ConflictException(
+        throw new BadRequestException(
           `Email "${dto.email}" is already registered`,
         );
       }

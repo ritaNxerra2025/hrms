@@ -1,5 +1,5 @@
 import {
-  ConflictException,
+  BadRequestException,
   Injectable,
   NotFoundException,
 } from '@nestjs/common';
@@ -55,7 +55,7 @@ export class DepartmentsService {
         dto.name,
       );
       if (existing && existing.id !== department.id) {
-        throw new ConflictException(
+        throw new BadRequestException(
           `Department name "${dto.name}" already exists`,
         );
       }
@@ -86,12 +86,12 @@ export class DepartmentsService {
     ]);
 
     if (byName) {
-      throw new ConflictException(
+      throw new BadRequestException(
         `Department name "${name}" already exists in this tenant`,
       );
     }
     if (byCode) {
-      throw new ConflictException(
+      throw new BadRequestException(
         `Department code "${code}" already exists in this tenant`,
       );
     }
