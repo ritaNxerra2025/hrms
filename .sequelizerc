@@ -1,0 +1,13 @@
+'use strict';
+
+const path = require('path');
+
+process.env.TS_NODE_PROJECT = path.join(__dirname, 'tsconfig.sequelize.json');
+process.env.TS_NODE_TRANSPILE_ONLY = 'true';
+require('ts-node/register/transpile-only');
+
+module.exports = {
+  config: path.join(__dirname, 'src/database/sequelize.config.ts'),
+  'migrations-path': path.join(__dirname, 'src/database/migrations'),
+  'seeders-path': path.join(__dirname, 'src/database/seeders'),
+};

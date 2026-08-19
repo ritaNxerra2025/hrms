@@ -1,0 +1,27 @@
+# dependencies
+/node_modules
+
+# build output
+/dist
+/dist-db
+/coverage
+
+# environment
+.env
+.env.local
+
+# logs
+*.log
+/logs
+
+# IDE
+.idea
+.vscode
+*.swp
+
+# OS
+.DS_Store
+Thumbs.db
+
+# temp
+*.tmp
