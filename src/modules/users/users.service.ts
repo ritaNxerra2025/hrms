@@ -44,6 +44,7 @@ export class UsersService {
       passwordHash,
       phone: dto.phone ?? null,
       status: dto.status ?? 'active',
+      moduleAccess: dto.moduleAccess ?? 'readOnly',
     });
 
     if (roleIds.length > 0) {
@@ -54,10 +55,12 @@ export class UsersService {
   }
 
   findAll(tenantId: number): Promise<User[]> {
+   
     return this.usersRepository.findAllForTenant(tenantId);
   }
 
   async findOne(tenantId: number, id: number): Promise<User> {
+  
     const user = await this.usersRepository.findByIdForTenant(tenantId, id);
     if (!user) {
       throw new NotFoundException(`User ${id} not found`);
@@ -99,6 +102,10 @@ export class UsersService {
 
     if (dto.departmentId !== undefined) {
       patch.departmentId = dto.departmentId;
+    }
+
+    if (dto.moduleAccess !== undefined) {
+      patch.moduleAccess = dto.moduleAccess;
     }
 
     if (dto.password) {

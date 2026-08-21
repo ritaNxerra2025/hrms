@@ -18,12 +18,23 @@ export class TenantsService {
       throw new BadRequestException(`Tenant code "${dto.code}" already exists`);
     }
 
-    return this.tenantsRepository.create({
-      name: dto.name,
-      code: dto.code,
-      description: dto.description ?? null,
-      status: dto.status ?? 'active',
-    });
+    const { settings, ...tenantData } = dto;
+
+    await this.tenantsRepository.createWithSettings(
+      {
+        name: tenantData.name,
+        code: tenantData.code,
+        description: tenantData.description ?? null,
+        status: tenantData.status ?? 'active',
+      },
+      settings,
+    );
+
+    const created = await this.tenantsRepository.findByCode(dto.code);
+    if (!created) {
+      throw new NotFoundException('Tenant could not be loaded after creation');
+    }
+    return created;
   }
 
   findAll(): Promise<Tenant[]> {
@@ -41,11 +52,15 @@ export class TenantsService {
   async update(id: number, dto: UpdateTenantDto): Promise<Tenant> {
     await this.findOne(id);
 
-    await this.tenantsRepository.update(id, {
-      name: dto.name,
-      description: dto.description,
-      status: dto.status,
-    });
+    const { settings, ...tenantData } = dto;
+
+    if (Object.keys(tenantData).length > 0) {
+      await this.tenantsRepository.update(id, tenantData);
+    }
+
+    if (settings && Object.keys(settings).length > 0) {
+      await this.tenantsRepository.upsertSettings(id, settings);
+    }
 
     return this.findOne(id);
   }

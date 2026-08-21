@@ -1,8 +1,8 @@
-import { Column, DataType, HasMany, Model, Table } from 'sequelize-typescript';
+import { Column, DataType, HasMany, HasOne, Model, Table } from 'sequelize-typescript';
 import { Department } from './department.model';
 import { Role } from './role.model';
 import { User } from './user.model';
-
+import { TenantSettings } from './tenant-setting.model';
 @Table({
   tableName: 'tenants',
   underscored: true,
@@ -42,6 +42,9 @@ export class Tenant extends Model<
     defaultValue: 'active',
   })
   declare status: string;
+
+  @HasOne(() => TenantSettings, { foreignKey: 'tenantId' })
+  declare settings: TenantSettings;
 
   @HasMany(() => User, { foreignKey: 'tenantId' })
   declare users: User[];

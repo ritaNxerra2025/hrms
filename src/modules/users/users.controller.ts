@@ -7,6 +7,7 @@ import {
   ParseIntPipe,
   Patch,
   Post,
+  Put,
 } from '@nestjs/common';
 import {
   ApiBearerAuth,
@@ -57,7 +58,7 @@ export class UsersController {
     return this.usersService.findOne(tenant.id, id);
   }
 
-  @Patch(':id')
+  @Put(':id')
   @RequirePermission('user:update')
   @ApiOperation({ summary: 'Update a user (profile, status, password)' })
   @ApiParam({ name: 'id', type: Number })

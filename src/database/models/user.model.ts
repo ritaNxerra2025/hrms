@@ -1,4 +1,5 @@
 import {
+  AllowNull,
   BelongsTo,
   BelongsToMany,
   Column,
@@ -32,6 +33,7 @@ export class User extends Model<
     phone?: string | null;
     status: string;
     lastLoginAt?: Date | null;
+    moduleAccess?: string | null
   }
 > {
   @Column({
@@ -69,6 +71,9 @@ export class User extends Model<
 
   @Column({ type: DataType.DATE, allowNull: true })
   declare lastLoginAt: Date | null;
+ 
+  @Column({type:DataType.STRING(80),allowNull:true,defaultValue:'readOnly'})
+  declare moduleAccess: string | null;
 
   @BelongsTo(() => Tenant, { foreignKey: 'tenantId' })
   declare tenant: Tenant;
@@ -85,4 +90,5 @@ export class User extends Model<
 
   @HasMany(() => UserRole, { foreignKey: 'userId' })
   declare userRoles: UserRole[];
+
 }

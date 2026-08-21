@@ -3,11 +3,13 @@ import { Permission } from './permission.model';
 import { Role } from './role.model';
 import { RolePermission } from './role-permission.model';
 import { Tenant } from './tenant.model';
+import { TenantSettings } from './tenant-setting.model';
 import { User } from './user.model';
 import { UserRole } from './user-role.model';
 
 export const allModels = [
   Tenant,
+  TenantSettings,
   Permission,
   Role,
   User,
@@ -17,6 +19,7 @@ export const allModels = [
 ];
 
 export * from './tenant.model';
+export * from './tenant-setting.model';
 export * from './permission.model';
 export * from './role.model';
 export * from './user.model';

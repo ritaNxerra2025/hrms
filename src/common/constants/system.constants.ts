@@ -11,6 +11,12 @@ export const STATUS = {
   INACTIVE: 'inactive',
 } as const;
 
+export const MODULE_ACCESS = {
+  Full: 'full',
+  Restricted: 'restricted',
+  ReadOnly: 'readOnly',
+} as const;
+
 export const ROLE_CODE = {
   SUPER_ADMIN: 'SUPER_ADMIN',
   COMPANY_ADMIN: 'COMPANY_ADMIN',

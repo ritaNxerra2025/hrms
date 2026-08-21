@@ -1,6 +1,6 @@
 import { Injectable } from '@nestjs/common';
 import { InjectConnection, InjectModel } from '@nestjs/sequelize';
-import { CreationAttributes } from 'sequelize';
+import { CreationAttributes, Op } from 'sequelize';
 import { Sequelize } from 'sequelize-typescript';
 import { Department } from '../../database/models/department.model';
 import { Permission } from '../../database/models/permission.model';
@@ -8,7 +8,9 @@ import { Role } from '../../database/models/role.model';
 import { User } from '../../database/models/user.model';
 import { UserRole } from '../../database/models/user-role.model';
 
-const PUBLIC_ATTRIBUTES = { exclude: ['passwordHash','deletedAt','updatedAt'] };
+const PUBLIC_ATTRIBUTES = {
+  exclude: ['passwordHash', 'deletedAt', 'updatedAt'],
+};
 
 @Injectable()
 export class UsersRepository {
@@ -20,7 +22,15 @@ export class UsersRepository {
 
   findAllForTenant(tenantId: number): Promise<User[]> {
     return this.userModel.findAll({
-      where: { tenantId },
+      where: {
+        tenantId,
+        id: {
+          [Op.notIn]: Sequelize.literal(
+            `(SELECT ur.user_id FROM user_roles ur INNER JOIN roles r ON r.id = ur.role_id WHERE r.code = 'SUPER_ADMIN' AND r.deleted_at IS NULL AND r.tenant_id = ${Number(tenantId)})`,
+          ),
+        },
+      },
+
       attributes: PUBLIC_ATTRIBUTES,
       include: [
         { model: Department, attributes: ['id', 'name', 'code'] },
@@ -64,7 +74,7 @@ export class UsersRepository {
         {
           model: Role,
           through: { attributes: [] },
-          // include: [{ model: Permission, through: { attributes: [] } }],
+          include: [{ model: Permission, through: { attributes: [] } }],
         },
       ],
     });

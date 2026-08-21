@@ -11,7 +11,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { STATUS } from '../../../common/constants/system.constants';
+import { MODULE_ACCESS, STATUS } from '../../../common/constants/system.constants';
 
 export class CreateUserDto {
   @ApiProperty({ example: 'Rahul' })
@@ -41,6 +41,11 @@ export class CreateUserDto {
   @IsOptional()
   @IsEnum(STATUS)
   status?: string;
+
+  @ApiPropertyOptional({ enum: ['full', 'restricted',"readsOnly"], default: 'full' })
+  @IsOptional()
+  @IsEnum(MODULE_ACCESS)
+  moduleAccess?: string;
 
   @ApiPropertyOptional({
     example: 1,

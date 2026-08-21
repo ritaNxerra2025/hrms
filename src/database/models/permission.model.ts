@@ -19,6 +19,7 @@ import { RolePermission } from './role-permission.model';
   timestamps: true,
   comment: 'System-defined permissions (module:action)',
 })
+
 export class Permission extends Model<
   Permission,
   {

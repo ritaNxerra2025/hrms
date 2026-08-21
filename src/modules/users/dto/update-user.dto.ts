@@ -10,7 +10,7 @@ import {
   MaxLength,
   MinLength,
 } from 'class-validator';
-import { STATUS } from '../../../common/constants/system.constants';
+import { MODULE_ACCESS, STATUS } from '../../../common/constants/system.constants';
 
 export class UpdateUserDto {
   @ApiPropertyOptional({ example: 'Rahul' })
@@ -18,12 +18,6 @@ export class UpdateUserDto {
   @IsString()
   @MaxLength(220)
   fullName?: string;
-
-  // @ApiPropertyOptional({ example: 'Verma' })
-  // @IsOptional()
-  // @IsString()
-  // @MaxLength(120)
-  // lastName?: string;
 
   @ApiPropertyOptional({ example: 'rahul.verma@nxerra.com' })
   @IsOptional()
@@ -41,6 +35,14 @@ export class UpdateUserDto {
   @IsOptional()
   @IsEnum(STATUS)
   status?: string;
+
+  @ApiPropertyOptional({
+    enum: ['full', 'restricted', 'readsOnly'],
+    default: 'full',
+  })
+  @IsOptional()
+  @IsEnum(MODULE_ACCESS)
+  moduleAccess?: string;
 
   @ApiPropertyOptional({
     example: 2,

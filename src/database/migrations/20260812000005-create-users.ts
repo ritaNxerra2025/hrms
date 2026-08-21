@@ -50,6 +50,11 @@ export default {
         allowNull: false,
         defaultValue: 'active',
       },
+      module_access: {
+        type: DataTypes.STRING(80),
+        allowNull: true,
+        defaultValue: 'readOnly',
+      },
       last_login_at: {
         type: DataTypes.DATE,
         allowNull: true,

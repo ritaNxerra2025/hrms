@@ -24,6 +24,7 @@ export default {
       { type: QueryTypes.SELECT, replacements: ['MGMT', tenantId] },
     );
     const departmentId = deptRows[0]?.id ?? null;
+    const moduleAccess = 'full';
 
     const passwordHash = bcrypt.hashSync(password, 10);
     const now = new Date();
@@ -42,6 +43,7 @@ export default {
           last_login_at: null,
           created_at: now,
           updated_at: now,
+          module_access: moduleAccess,
         },
       ],
       {},

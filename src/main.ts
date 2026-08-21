@@ -9,7 +9,9 @@ import { AppModule } from './app.module';
 import { LoggerService } from './infrastructure/logging/logger.service';
 
 async function bootstrap() {
-  const app = await NestFactory.create<NestExpressApplication>(AppModule);
+  const app = await NestFactory.create<NestExpressApplication>(AppModule, {
+    logger: ['error', 'warn'],
+  });
 
   app.useLogger(new LoggerService());
 

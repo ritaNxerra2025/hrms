@@ -7,8 +7,11 @@ import {
   Matches,
   MaxLength,
   MinLength,
+  ValidateNested,
 } from 'class-validator';
+import { Type } from 'class-transformer';
 import { STATUS } from '../../../common/constants/system.constants';
+import { TenantSettingsDto } from './tenant-settings.dto';
 
 export class CreateTenantDto {
   @ApiProperty({ example: 'Acme Corp', description: 'Tenant display name' })
@@ -39,4 +42,10 @@ export class CreateTenantDto {
   @IsOptional()
   @IsEnum(STATUS)
   status?: string;
+
+  @ApiPropertyOptional({ type: TenantSettingsDto })
+  @IsOptional()
+  @ValidateNested()
+  @Type(() => TenantSettingsDto)
+  settings?: TenantSettingsDto;
 }
